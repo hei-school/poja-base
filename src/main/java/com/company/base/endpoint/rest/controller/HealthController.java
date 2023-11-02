@@ -31,7 +31,7 @@ public class HealthController {
   }
 
   @GetMapping("/uuid-created")
-  public TypedUuidCreated uuidCreated() {
+  public TypedUuidCreated uuidCrated() {
     var event = new TypedUuidCreated(new UuidCreated().toBuilder().uuid(randomUUID().toString()).build());
     eventProducer.accept(List.of(event));
     return event;

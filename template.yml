@@ -29,9 +29,9 @@ Resources:
       CodeUri: .
       Handler: com.company.base.ApiEventHandler::handleRequest
       Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
-      # AutoPublishAlias: live
-      # SnapStart:
-      #  ApplyOn: PublishedVersions
+      AutoPublishAlias: live
+      SnapStart:
+        ApplyOn: PublishedVersions
       VpcConfig:
         SecurityGroupIds:
           - !Sub '{{resolve:ssm:/poja/sg/id}}'
@@ -49,7 +49,6 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: com.company.base.MailboxEventHandler::handleRequest
-      Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
       Events:
         GetFeatures:
           Type: SQS
