@@ -2,7 +2,7 @@ package com.company.base.endpoint.event;
 
 import com.company.base.endpoint.event.gen.UuidCreated;
 import com.company.base.endpoint.event.model.TypedEvent;
-import com.company.base.endpoint.event.model.TypedJobCreated;
+import com.company.base.endpoint.event.model.TypedUuidCreated;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -62,7 +62,7 @@ public class EventConsumer implements Consumer<List<EventConsumer.Acknowledgeabl
     String typeName = body.get(DETAIL_TYPE_PROPERTY).toString();
     if (UuidCreated.class.getTypeName().equals(typeName)) {
       UuidCreated uuidCreated = om.convertValue(body.get(DETAIL_ROPERTY), UuidCreated.class);
-      typedEvent = new TypedJobCreated(uuidCreated);
+      typedEvent = new TypedUuidCreated(uuidCreated);
     } else {
       throw new RuntimeException("Unexpected message type for message=" + message);
     }
