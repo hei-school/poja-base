@@ -113,7 +113,7 @@ Resources:
   EventBridgeBusNameSSM:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Join ['',[poja-base/ , !Ref Env , /eventbridge/bus-name]]
+      Name: !Join ['',[/poja-base/ , !Ref Env , /eventbridge/bus-name]]
       Type: String
       Value: !GetAtt EventBridgeBus.Name
 
