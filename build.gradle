@@ -16,7 +16,7 @@ plugins {
 }
 
 java {
-    group = 'school.api.poja'
+    group = 'com.company.base'
     sourceCompatibility = '17'
     targetCompatibility = '17'
 }
