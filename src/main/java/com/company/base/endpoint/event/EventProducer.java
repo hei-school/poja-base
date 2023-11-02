@@ -22,7 +22,7 @@ import software.amazon.awssdk.services.eventbridge.model.PutEventsResultEntry;
 @Component
 @Slf4j
 public class EventProducer implements Consumer<List<TypedEvent>> {
-  private static final String EVENT_SOURCE = "api.bpartners.annotator";
+  private static final String EVENT_SOURCE = "com.company.base";
   private final ObjectMapper om;
   private final String eventBusName;
   private final EventBridgeClient eventBridgeClient;

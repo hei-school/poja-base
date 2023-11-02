@@ -34,6 +34,6 @@ public class MailboxEventHandler implements RequestHandler<SQSEvent, String> {
   }
 
   private ConfigurableApplicationContext applicationContext(String... args) {
-    return SpringApplication.run(BpartnersAnnotatorApiApplication.class, args);
+    return SpringApplication.run(PojaApplication.class, args);
   }
 }
