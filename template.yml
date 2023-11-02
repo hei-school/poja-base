@@ -25,7 +25,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: school.hei.poja.LambdaHandler::handleRequest
+      Handler: com.company.base.LambdaHandler::handleRequest
       AutoPublishAlias: live
       SnapStart:
         ApplyOn: PublishedVersions

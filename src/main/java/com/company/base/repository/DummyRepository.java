@@ -1,8 +1,8 @@
-package school.hei.poja.repository;
+package com.company.base.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import school.hei.poja.repository.model.Dummy;
+import com.company.base.repository.model.Dummy;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package school.hei.poja.endpoint.rest.controller;
+package com.company.base.endpoint.rest.controller;
 
 import lombok.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import school.hei.poja.repository.DummyRepository;
-import school.hei.poja.repository.model.Dummy;
+import com.company.base.repository.DummyRepository;
+import com.company.base.repository.model.Dummy;
 
 import java.util.List;
 

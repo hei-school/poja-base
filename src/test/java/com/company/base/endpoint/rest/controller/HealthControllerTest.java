@@ -1,8 +1,8 @@
-package school.hei.poja.endpoint.rest.controller;
+package com.company.base.endpoint.rest.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import school.hei.poja.PostgresTest;
+import com.company.base.PostgresTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

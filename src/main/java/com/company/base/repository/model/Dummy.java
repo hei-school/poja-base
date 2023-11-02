@@ -1,4 +1,4 @@
-package school.hei.poja.repository.model;
+package com.company.base.repository.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
