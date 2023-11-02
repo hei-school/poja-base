@@ -12,7 +12,7 @@ public class TypedUuidCreated implements TypedEvent {
 
   @Override
   public String getTypeName() {
-    return uuidCreated.class.getTypeName();
+    return UuidCreated.class.getTypeName();
   }
 
   @Override

@@ -1,12 +1,12 @@
 package com.company.base.endpoint.rest.controller;
 
+import com.company.base.FacadeTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.company.base.PostgresTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class HealthControllerTest extends PostgresTest {
+class HealthControllerTest extends FacadeTest {
 
   @Autowired
   HealthController healthController;
