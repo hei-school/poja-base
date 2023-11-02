@@ -1,10 +1,11 @@
 package com.company.base.service;
 
-import java.util.function.Consumer;
+import com.company.base.endpoint.event.gen.UuidCreated;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.company.base.endpoint.event.gen.UuidCreated;
+
+import java.util.function.Consumer;
 
 @Service
 @AllArgsConstructor
@@ -13,6 +14,6 @@ public class UuidCreatedService implements Consumer<UuidCreated> {
 
   @Override
   public void accept(UuidCreated uuidCreated) {
-    log.info("uuid={}.", uuidCreated.getUuid());
+    log.info("Asynchronously receive:d uuidCreated={}.", uuidCreated);
   }
 }
