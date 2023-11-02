@@ -1,0 +1,6 @@
+app_name: poja-base
+cli_version: 0.1.4
+region: eu-west-3
+ssm_sg_id: /poja/sg/id
+ssm_subnet1_id: /poja/subnet/public1/id
+ssm_subnet2_id: /poja/subnet/public2/id
