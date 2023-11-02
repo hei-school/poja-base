@@ -21,11 +21,12 @@ Parameters:
     Type: String
 
 Resources:
-  Function:
+  ApiFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
       Handler: com.company.base.LambdaHandler::handleRequest
+      Role: !Sub '{{resolve:ssm:/bpartners-annotator/${Env}/execution/role-arn}}'
       AutoPublishAlias: live
       SnapStart:
         ApplyOn: PublishedVersions
@@ -41,6 +42,17 @@ Resources:
           Properties:
             Path: /{proxy+}
             Method: ANY
+
+  MailboxEventFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.company.base.MailboxEventHandler::handleRequest
+      Events:
+        GetFeatures:
+          Type: SQS
+          Properties:
+            Queue: !Sub '{{resolve:ssm:/poja-base/${Env}/sqs/mailbox-queue-arn}}'
+            BatchSize: 1
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
