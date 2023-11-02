@@ -49,6 +49,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: com.company.base.MailboxEventHandler::handleRequest
+      Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
       Events:
         GetFeatures:
           Type: SQS
