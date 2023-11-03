@@ -51,7 +51,7 @@ Resources:
       Handler: com.company.base.MailboxEventHandler::handleRequest
       Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
       Events:
-        GetFeatures:
+        AllEvents:
           Type: SQS
           Properties:
             Queue: !Sub '{{resolve:ssm:/poja-base/${Env}/sqs/mailbox-queue-arn}}'
