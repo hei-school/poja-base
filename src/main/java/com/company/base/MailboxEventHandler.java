@@ -3,16 +3,16 @@ package com.company.base;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
+import com.company.base.endpoint.event.EventConf;
+import com.company.base.endpoint.event.EventConsumer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import com.company.base.endpoint.event.EventConf;
-import com.company.base.endpoint.event.EventConsumer;
 import software.amazon.awssdk.services.sqs.SqsClient;
 
 import java.util.List;
+import java.util.Map;
 
-import static java.util.Collections.singletonMap;
 import static com.company.base.endpoint.event.EventConsumer.toAcknowledgeableTypedEvent;
 
 @Slf4j
@@ -20,9 +20,9 @@ public class MailboxEventHandler implements RequestHandler<SQSEvent, String> {
 
   @Override
   public String handleRequest(SQSEvent event, Context context) {
-    log.info("Following received events : {}\n", event);
+    log.info("Received: event={}, context={}", event, context);
     List<SQSEvent.SQSMessage> messages = event.getRecords();
-    log.info("Following received messages : {}\n", messages);
+    log.info("SQS messages: {}", messages);
 
     ConfigurableApplicationContext applicationContext = applicationContext();
     EventConsumer eventConsumer = applicationContext.getBean(EventConsumer.class);
@@ -35,9 +35,16 @@ public class MailboxEventHandler implements RequestHandler<SQSEvent, String> {
     return "{message: ok}";
   }
 
-  private ConfigurableApplicationContext applicationContext(String... args) {
+  private ConfigurableApplicationContext applicationContext() {
+    log.info("DATABASE_URL");
+    log.info(System.getenv("DATABASE_URL"));
     SpringApplication application = new SpringApplication(PojaApplication.class);
-    application.setDefaultProperties(singletonMap("spring.main.web-application-type", "none"));
-    return application.run(args);
+    application.setDefaultProperties(Map.of(
+        "spring.main.web-application-type", "none",
+        "spring.datasource.url", System.getenv("DATABASE_URL"),
+        "spring.datasource.username", System.getenv("DATABASE_USERNAME"),
+        "spring.datasource.password", System.getenv("DATABASE_PASSWORD")
+    ));
+    return application.run();
   }
 }
