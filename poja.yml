@@ -1,5 +1,5 @@
 app_name: poja-base
-cli_version: 0.3.0
+cli_version: 1.0.0
 package_full_name: com.company.base
 region: eu-west-3
 ssm_sg_id: /poja/sg/id
