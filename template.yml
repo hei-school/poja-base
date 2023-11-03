@@ -4,6 +4,7 @@ Description: poja-base - Computation and API
 
 Globals:
   Function:
+    CodeUri: .
     Runtime: java17
     Tracing: Active
     Architectures:
@@ -35,10 +36,9 @@ Resources:
   ApiFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: .
       Handler: com.company.base.ApiEventHandler::handleRequest
       Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
-    Events:
+      Events:
         ApiCall:
           Type: Api
           Properties:
@@ -70,7 +70,14 @@ Resources:
       ResourceGroupName: !Ref ApplicationResourceGroup
       AutoConfigurationEnabled: 'true'
 
+  ApiUrlSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Join [ '', [ /poja-base/, !Ref Env, /api/url ] ]
+      Type: String
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+
 Outputs:
   ApiUrl:
     Description: API Gateway endpoint URL
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+    Value: !GetAtt ApiUrlSSM.Value
