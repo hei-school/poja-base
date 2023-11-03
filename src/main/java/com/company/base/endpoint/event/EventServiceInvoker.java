@@ -1,15 +1,16 @@
 package com.company.base.endpoint.event;
 
+import com.company.base.PojaGenerated;
+import com.company.base.endpoint.event.gen.UuidCreated;
+import com.company.base.endpoint.event.model.TypedEvent;
+import com.company.base.service.event.UuidCreatedService;
+import java.io.Serializable;
+import java.util.function.Consumer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import com.company.base.endpoint.event.gen.UuidCreated;
-import com.company.base.endpoint.event.model.TypedEvent;
-import com.company.base.service.UuidCreatedService;
 
-import java.io.Serializable;
-import java.util.function.Consumer;
-
+@PojaGenerated
 @AllArgsConstructor
 @Component
 @Slf4j

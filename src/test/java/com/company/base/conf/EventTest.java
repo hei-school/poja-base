@@ -1,4 +1,4 @@
-package com.company.base;
+package com.company.base.conf;
 
 import org.springframework.test.context.DynamicPropertyRegistry;
 

@@ -10,6 +10,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Dummy {
+public class DummyUuid {
   @Id private String id;
 }
