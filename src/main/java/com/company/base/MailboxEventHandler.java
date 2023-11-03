@@ -11,8 +11,8 @@ import com.company.base.endpoint.event.EventConsumer;
 import software.amazon.awssdk.services.sqs.SqsClient;
 
 import java.util.List;
+import java.util.Map;
 
-import static java.util.Collections.singletonMap;
 import static com.company.base.endpoint.event.EventConsumer.toAcknowledgeableTypedEvent;
 
 @Slf4j
@@ -37,7 +37,9 @@ public class MailboxEventHandler implements RequestHandler<SQSEvent, String> {
 
   private ConfigurableApplicationContext applicationContext(String... args) {
     SpringApplication application = new SpringApplication(PojaApplication.class);
-    application.setDefaultProperties(singletonMap("spring.main.web-application-type", "none"));
+    application.setDefaultProperties(Map.of(
+        "spring.main.web-application-type", "none",
+        "spring.flyway.enabled", "false"));
     return application.run(args);
   }
 }

@@ -71,7 +71,6 @@ public class EventConsumer implements Consumer<List<EventConsumer.Acknowledgeabl
 
   @Override
   public void accept(List<AcknowledgeableTypedEvent> ackTypedEvents) {
-    log.info("EventConsumer::accept");
     for (AcknowledgeableTypedEvent ackTypedEvent : ackTypedEvents) {
       eventServiceInvoker.accept(ackTypedEvent.getTypedEvent());
       ackTypedEvent.ack();
