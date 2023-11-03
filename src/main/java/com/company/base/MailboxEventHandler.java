@@ -36,7 +36,7 @@ public class MailboxEventHandler implements RequestHandler<SQSEvent, String> {
   }
 
   private ConfigurableApplicationContext applicationContext(String... args) {
-    SpringApplication application = new SpringApplication(MailboxEventHandler.class);
+    SpringApplication application = new SpringApplication(PojaApplication.class);
     application.setDefaultProperties(singletonMap("spring.main.web-application-type", "none"));
     return application.run(args);
   }
