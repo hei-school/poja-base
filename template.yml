@@ -70,14 +70,7 @@ Resources:
       ResourceGroupName: !Ref ApplicationResourceGroup
       AutoConfigurationEnabled: 'true'
 
-  ApiUrlSSM:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: !Join [ '', [ /poja-base/, !Ref Env, /api/url ] ]
-      Type: String
-      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
-
 Outputs:
   ApiUrl:
     Description: API Gateway endpoint URL
-    Value: !GetAtt ApiUrlSSM.Value
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
