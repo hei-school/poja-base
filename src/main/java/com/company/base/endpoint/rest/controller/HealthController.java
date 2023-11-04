@@ -5,7 +5,6 @@ import static java.util.UUID.randomUUID;
 import com.company.base.PojaGenerated;
 import com.company.base.endpoint.event.EventProducer;
 import com.company.base.endpoint.event.gen.UuidCreated;
-import com.company.base.endpoint.event.model.TypedUuidCreated;
 import com.company.base.repository.DummyRepository;
 import com.company.base.repository.DummyUuidRepository;
 import com.company.base.repository.model.Dummy;
@@ -37,7 +36,7 @@ public class HealthController {
   @GetMapping("/uuid-created")
   public String uuidCreated() throws InterruptedException {
     var randomUuid = randomUUID().toString();
-    var event = new TypedUuidCreated(new UuidCreated().toBuilder().uuid(randomUuid).build());
+    var event = new UuidCreated().toBuilder().uuid(randomUuid).build();
 
     eventProducer.accept(List.of(event));
 
