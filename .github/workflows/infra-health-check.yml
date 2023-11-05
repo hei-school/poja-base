@@ -1,7 +1,7 @@
 name: Infra health check (prod)
 on:
   schedule:
-    - cron: '30,35 19 * * *'
+    - cron: '0 8 * * *'
   workflow_dispatch:
   push:
     branches:
