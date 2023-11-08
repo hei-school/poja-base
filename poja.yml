@@ -1,5 +1,5 @@
 app_name: poja-base
-cli_version: 1.3.0
+cli_version: 1.4.0
 custom_java_deps: poja-custom-java-deps.txt
 custom_java_env_vars: poja-custom-java-env-vars.txt
 package_full_name: com.company.base
