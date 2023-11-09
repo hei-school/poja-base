@@ -1,5 +1,5 @@
 app_name: poja-base
-cli_version: 1.4.0
+cli_version: 2.0.4
 custom_java_deps: poja-custom-java-deps.txt
 custom_java_env_vars: poja-custom-java-env-vars.txt
 package_full_name: com.company.base
@@ -7,4 +7,4 @@ region: eu-west-3
 ssm_sg_id: /poja/sg/id
 ssm_subnet1_id: /poja/subnet/private1/id
 ssm_subnet2_id: /poja/subnet/private2/id
-with_postgres: true
+with_postgres: 'true'
