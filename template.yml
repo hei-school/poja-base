@@ -11,9 +11,9 @@ Globals:
       - x86_64
     Timeout: 600
     MemorySize: 1024
-    #AutoPublishAlias: live
-    #SnapStart:
-    #  ApplyOn: PublishedVersions
+    AutoPublishAlias: live
+    SnapStart:
+      ApplyOn: PublishedVersions
     VpcConfig:
       SecurityGroupIds:
         - !Sub '{{resolve:ssm:/poja/sg/id}}'
@@ -25,9 +25,9 @@ Globals:
         ENV: !Ref Env
         AWS_SQS_QUEUE_URL: !Sub '{{resolve:ssm:/poja-base/${Env}/sqs/mailbox-queue-url}}'
         AWS_EVENTBRIDGE_BUS: !Sub '{{resolve:ssm:/poja-base/${Env}/eventbridge/bus-name}}'
-        DATABASE_URL: !Sub '{{resolve:ssm:/poja-base/${Env}/db/url}}'
-        DATABASE_USERNAME: !Sub '{{resolve:ssm:/poja-base/${Env}/db/username}}'
-        DATABASE_PASSWORD: !Sub '{{resolve:ssm:/poja-base/${Env}/db/password}}'
+        SPRING_DATASOURCE_URL: !Sub '{{resolve:ssm:/poja-base/${Env}/db/url}}'
+        SPRING_DATASOURCE_USERNAME: !Sub '{{resolve:ssm:/poja-base/${Env}/db/username}}'
+        SPRING_DATASOURCE_PASSWORD: !Sub '{{resolve:ssm:/poja-base/${Env}/db/password}}'
         
 
 Parameters:
