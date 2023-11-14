@@ -11,17 +11,17 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class DatasourceConf {
 
-  private final String databaseUrl;
-  private final String databaseUsername;
-  private final String databasePassword;
+  private final String appPropDbUrl;
+  private final String appProdDbUsername;
+  private final String appPropDbPassword;
 
   public DatasourceConf(
-      @Value("${DATABASE_URL:${spring.datasource.url}}") String databaseUrl,
-      @Value("${DATABASE_USERNAME:${spring.datasource.username}}") String databaseUsername,
-      @Value("${DATABASE_PASSWORD:${spring.datasource.password}}") String databasePassword) {
-    this.databaseUrl = databaseUrl;
-    this.databaseUsername = databaseUsername;
-    this.databasePassword = databasePassword;
+      @Value("${spring.datasource.url:#{null}}") String appPropDbUrl,
+      @Value("${spring.datasource.username:#{null}}") String appProdDbUsername,
+      @Value("${spring.datasource.password:#{null}}") String appPropDbPassword) {
+    this.appPropDbUrl = appPropDbUrl;
+    this.appProdDbUsername = appProdDbUsername;
+    this.appPropDbPassword = appPropDbPassword;
   }
 
   @ConfigurationProperties(prefix = "datasource.postgres")
@@ -29,9 +29,11 @@ public class DatasourceConf {
   @Primary
   public DataSource dataSource() {
     return DataSourceBuilder.create()
-        .url(databaseUrl)
-        .username(databaseUsername)
-        .password(databasePassword)
+        .url(appPropDbUrl == null ? System.getenv("DATABASE_URL") : appPropDbUrl)
+        .username(
+            appProdDbUsername == null ? System.getenv("DATABASE_USERNAME") : appProdDbUsername)
+        .password(
+            appPropDbPassword == null ? System.getenv("DATABASE_PASSWORD") : appPropDbPassword)
         .build();
   }
 }
