@@ -14,12 +14,7 @@ Globals:
     AutoPublishAlias: live
     SnapStart:
       ApplyOn: PublishedVersions
-    VpcConfig:
-      SecurityGroupIds:
-        - !Sub '{{resolve:ssm:/poja/sg/id}}'
-      SubnetIds:
-        - !Sub '{{resolve:ssm:/poja/subnet/private1/id}}'
-        - !Sub '{{resolve:ssm:/poja/subnet/private2/id}}'
+    
     Environment:
       Variables:
         ENV: !Ref Env
