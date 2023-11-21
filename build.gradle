@@ -87,6 +87,6 @@ dependencies {
 
     testImplementation 'org.testcontainers:postgresql:1.19.1'
 
-    implementation 'com.opencsv:opencsv:5.8'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+implementation 'com.opencsv:opencsv:5.8'
+implementation 'org.springframework.boot:spring-boot-starter-security'
 }
