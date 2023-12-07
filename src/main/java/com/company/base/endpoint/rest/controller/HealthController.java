@@ -9,6 +9,7 @@ import com.company.base.endpoint.event.gen.UuidCreated;
 import com.company.base.file.BucketComponent;
 import com.company.base.repository.DummyRepository;
 import com.company.base.repository.DummyUuidRepository;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
@@ -58,11 +59,14 @@ public class HealthController {
   public ResponseEntity<String> file_can_be_uploaded_then_signed() throws IOException {
     var fileSuffix = ".txt";
     var filePrefix = randomUUID().toString();
-    var emptyTmpFile = createTempFile(filePrefix, fileSuffix);
+    var tmpFile = createTempFile(filePrefix, fileSuffix);
+    FileWriter writer = new FileWriter(tmpFile);
+    writer.write(randomUUID().toString());
+    writer.close();
 
     var filename = filePrefix + fileSuffix;
     var bucketKey = "health/" + filename;
-    bucketComponent.upload(emptyTmpFile, bucketKey);
+    bucketComponent.upload(tmpFile, bucketKey);
 
     return ResponseEntity.of(
         Optional.of(bucketComponent.presign(bucketKey, Duration.ofMinutes(2)).toString()));
