@@ -65,6 +65,6 @@ public class HealthController {
     bucketComponent.upload(emptyTmpFile, bucketKey);
 
     return ResponseEntity.of(
-        Optional.of(bucketComponent.preSign(bucketKey, Duration.ofMinutes(2)).toString()));
+        Optional.of(bucketComponent.presign(bucketKey, Duration.ofMinutes(2)).toString()));
   }
 }

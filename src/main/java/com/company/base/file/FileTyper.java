@@ -17,8 +17,8 @@ public class FileTyper implements Function<File, MediaType> {
   @SneakyThrows
   @Override
   public MediaType apply(File file) {
-    Tika tika = new Tika();
-    String guessedMediaTypeValue = tika.detect(file);
-    return parseMediaType(guessedMediaTypeValue);
+    var tika = new Tika();
+    String detectedMediaType = tika.detect(file);
+    return parseMediaType(detectedMediaType);
   }
 }
