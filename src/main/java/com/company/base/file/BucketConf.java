@@ -13,19 +13,19 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 public class BucketConf {
 
   @Getter private final String bucketName;
-  @Getter private final S3Client s3Client = S3Client.create();
+  @Getter private final S3Client s3Client;
   @Getter private final S3Presigner s3Presigner;
 
   @SneakyThrows
   public BucketConf(
-      @Value("${aws.region}") String region,
+      @Value("${aws.region}") String regionString,
       @Value("${aws.endpoint}") String awsEndpoint,
       @Value("${aws.s3.bucket}") String bucketName) {
     this.bucketName = bucketName;
+    var region = Region.of(regionString);
+    var endpointOverride = new URI(awsEndpoint);
+    this.s3Client = S3Client.builder().endpointOverride(endpointOverride).region(region).build();
     this.s3Presigner =
-        S3Presigner.builder()
-            .endpointOverride(new URI(awsEndpoint))
-            .region(Region.of(region))
-            .build();
+        S3Presigner.builder().endpointOverride(endpointOverride).region(region).build();
   }
 }
