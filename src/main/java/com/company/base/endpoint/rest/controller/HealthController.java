@@ -1,13 +1,18 @@
 package com.company.base.endpoint.rest.controller;
 
+import static java.io.File.createTempFile;
 import static java.util.UUID.randomUUID;
 
 import com.company.base.PojaGenerated;
 import com.company.base.endpoint.event.EventProducer;
 import com.company.base.endpoint.event.gen.UuidCreated;
+import com.company.base.file.BucketComponent;
 import com.company.base.repository.DummyRepository;
 import com.company.base.repository.DummyUuidRepository;
+import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +27,7 @@ public class HealthController {
   DummyRepository dummyRepository;
   DummyUuidRepository dummyUuidRepository;
   EventProducer eventProducer;
+  BucketComponent bucketComponent;
 
   public static final ResponseEntity<String> OK = new ResponseEntity<>("OK", HttpStatus.OK);
   public static final ResponseEntity<String> KO =
@@ -46,5 +52,19 @@ public class HealthController {
 
     Thread.sleep(20_000);
     return dummyUuidRepository.findById(randomUuid).map(dummyUuid -> OK).orElse(KO);
+  }
+
+  @GetMapping(value = "/health/bucket")
+  public ResponseEntity<String> file_can_be_uploaded_then_signed() throws IOException {
+    var fileSuffix = ".txt";
+    var filePrefix = randomUUID().toString();
+    var emptyTmpFile = createTempFile(filePrefix, fileSuffix);
+
+    var filename = filePrefix + fileSuffix;
+    var bucketKey = "health/" + filename;
+    bucketComponent.upload(emptyTmpFile, bucketKey);
+
+    return ResponseEntity.of(
+        Optional.of(bucketComponent.preSign(bucketKey, Duration.ofMinutes(2)).toString()));
   }
 }
