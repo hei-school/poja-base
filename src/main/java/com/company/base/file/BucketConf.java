@@ -1,5 +1,6 @@
 package com.company.base.file;
 
+import com.company.base.PojaGenerated;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +9,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
+@PojaGenerated
 @Configuration
 public class BucketConf {
 

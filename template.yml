@@ -28,7 +28,7 @@ Globals:
         DATABASE_URL: !Sub '{{resolve:ssm:/poja-base/${Env}/db/url}}'
         DATABASE_USERNAME: !Sub '{{resolve:ssm:/poja-base/${Env}/db/username}}'
         DATABASE_PASSWORD: !Sub '{{resolve:ssm:/poja-base/${Env}/db/password}}'
-
+        
 
 Parameters:
   Env:
