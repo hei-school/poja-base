@@ -25,7 +25,6 @@ public class BucketConf {
     this.s3Presigner =
         S3Presigner.builder()
             .region(region)
-            .credentialsProvider(AnonymousCredentialsProvider.create())
             .build();
   }
 }
