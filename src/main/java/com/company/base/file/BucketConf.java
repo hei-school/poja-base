@@ -1,6 +1,5 @@
 package com.company.base.file;
 
-import java.net.URI;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,14 +17,10 @@ public class BucketConf {
 
   @SneakyThrows
   public BucketConf(
-      @Value("${aws.region}") String regionString,
-      @Value("${aws.endpoint}") String awsEndpoint,
-      @Value("${aws.s3.bucket}") String bucketName) {
+      @Value("${aws.region}") String regionString, @Value("${aws.s3.bucket}") String bucketName) {
     this.bucketName = bucketName;
     var region = Region.of(regionString);
-    var endpointOverride = new URI(awsEndpoint);
-    this.s3Client = S3Client.builder().endpointOverride(endpointOverride).region(region).build();
-    this.s3Presigner =
-        S3Presigner.builder().endpointOverride(endpointOverride).region(region).build();
+    this.s3Client = S3Client.builder().region(region).build();
+    this.s3Presigner = S3Presigner.builder().region(region).build();
   }
 }
