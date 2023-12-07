@@ -29,12 +29,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: GET /dummy-table
+      - name: GET /health/db
         run: |
           export API_URL_SSM="`aws ssm get-parameter --name /poja-base/${{ github.ref_name }}/api/url`"
           sudo apt-get install jq
           export API_URL=`echo $API_URL_SSM | jq -r '.Parameter.Value'`
-          curl --fail "$API_URL"/dummy-table
+          curl --fail "$API_URL"/health/db
 
   check-async-stack:
     timeout-minutes: 300
@@ -51,9 +51,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: GET /uuid-created
+      - name: GET /health/event
         run: |
           export API_URL_SSM="`aws ssm get-parameter --name /poja-base/${{ github.ref_name }}/api/url`"
           sudo apt-get install jq
           export API_URL=`echo $API_URL_SSM | jq -r '.Parameter.Value'`
-          curl --max-time 60 --fail "$API_URL"/uuid-created
+          curl --max-time 60 --fail "$API_URL"/health/event
