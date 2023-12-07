@@ -10,9 +10,9 @@ Globals:
     Architectures:
       - x86_64
     Timeout: 600
-    AutoPublishAlias: live
-    SnapStart:
-      ApplyOn: PublishedVersions
+    #AutoPublishAlias: live
+    #SnapStart:
+    #  ApplyOn: PublishedVersions
     VpcConfig:
       SecurityGroupIds:
         - !Sub '{{resolve:ssm:/poja/sg/id}}'
