@@ -5,5 +5,4 @@ create table if not exists dummy
 );
 
 insert into dummy (id)
-values ('dummy-table-id-1')
-on conflict on constraint dummy_pk do nothing;
+values ('dummy-table-id-1');
