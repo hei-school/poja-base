@@ -9,14 +9,14 @@ import com.company.base.endpoint.event.EventProducer;
 import com.company.base.endpoint.event.gen.UuidCreated;
 import com.company.base.repository.DummyUuidRepository;
 import java.util.List;
-import lombok.Value;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @PojaGenerated
 @RestController
-@Value
+@AllArgsConstructor
 public class HealthEventController {
 
   DummyUuidRepository dummyUuidRepository;

@@ -9,14 +9,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Optional;
-import lombok.Value;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @PojaGenerated
 @RestController
-@Value
+@AllArgsConstructor
 public class HealthBucketController {
 
   BucketComponent bucketComponent;
