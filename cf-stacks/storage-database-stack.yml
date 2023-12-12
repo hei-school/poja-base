@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: poja-base - Storage
+Description: poja-base - Storage Postgres
 
 Parameters:
   Env:
