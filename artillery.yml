@@ -1,0 +1,10 @@
+config:
+  target: "https://yrw9hsvbic.execute-api.eu-west-3.amazonaws.com"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+
+scenarios:
+  - flow:
+      - get:
+          url: "/Prod/health/event"

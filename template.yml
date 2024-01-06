@@ -31,6 +31,7 @@ Globals:
         DATABASE_USERNAME: !Sub '{{resolve:ssm:/poja-base/${Env}/db/username}}'
         DATABASE_PASSWORD: !Sub '{{resolve:ssm:/poja-base/${Env}/db/password}}'
         
+        
 
 Parameters:
   Env:
@@ -41,7 +42,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: com.company.base.ApiEventHandler::handleRequest
-      MemorySize: 512
+      MemorySize: 2048
       Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
       
       Events:
