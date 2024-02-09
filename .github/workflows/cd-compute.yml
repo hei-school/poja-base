@@ -7,6 +7,15 @@ on:
       - 'preprod'
 
   workflow_dispatch:
+    inputs:
+      run_tests:
+        type: choice
+        required: false
+        default: 'yes'
+        description: Run tests ?
+        options:
+          - 'yes'
+          - 'no'
 
   workflow_call:
 
@@ -32,7 +41,18 @@ jobs:
           secrets: ${{ toJSON(secrets) }}
           region: ${{ env.AWS_REGION }}
 
+      - name: Disable tests
+        if: ${{ github.event.inputs.run_tests == 'no' }}
+        run: |
+          printf "tasks.named('test').configure {\n    enabled = false\n}" >> build.gradle
+
       - run: sam build
 
       - name: Deploy application
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name ${{ github.ref_name }}-compute-poja-base --capabilities CAPABILITY_IAM --parameter-overrides Env=${{ github.ref_name }} --resolve-s3
+
+  health-check-infra:
+    needs: [deploy-api]
+    if: ${{ needs.deploy-api.result == 'success' && (github.ref_name == 'prod' || github.ref_name == 'preprod') }}
+    uses: ./.github/workflows/health-check-infra.yml
+    secrets: inherit

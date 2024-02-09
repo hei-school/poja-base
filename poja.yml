@@ -1,10 +1,11 @@
 app_name: poja-base
-cli_version: 10.1.0
+cli_version: 11.0.1
 custom_java_deps: poja-custom-java-deps.txt
 custom_java_env_vars: poja-custom-java-env-vars.txt
 custom_java_repositories: poja-custom-java-repositories.txt
 frontal_memory: 2048
 jacoco_min_coverage: '0.5'
+java_facade_it: FacadeIT
 package_full_name: com.company.base
 region: eu-west-3
 ses_source: lou@hei.school

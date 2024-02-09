@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
+import com.company.base.PojaGenerated;
 import com.company.base.conf.FacadeIT;
 import com.company.base.endpoint.event.EventConsumer;
 import com.company.base.endpoint.event.gen.UuidCreated;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.DeleteMessageRequest;
 
+@PojaGenerated
 public class SqsMessageAckTyperTest extends FacadeIT {
   public static final String UNKNOWN_TYPENAME = "unknown_typename";
   @Autowired EventConsumer.SqsMessageAckTyper subject;
