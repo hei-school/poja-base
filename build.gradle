@@ -48,6 +48,13 @@ test {
 
 jacocoTestCoverageVerification {
     dependsOn test
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "**/gen/**"
+            ])
+        }))
+    }
     violationRules {
         rule {
             limit {
@@ -63,6 +70,15 @@ jacocoTestReport {
     reports {
         xml.required = true
         html.required = true
+    }
+    afterEvaluate {
+        // Need to be duplicated like this from jacocoTestCoverageVerification,
+        // else display coverageRate is inconsistent with what was computed during coverage...
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "**/gen/**"
+            ])
+        }))
     }
     doLast {
         def coverageReportFile = file("$buildDir/reports/jacoco/test/jacocoTestReport.xml")
@@ -114,7 +130,7 @@ dependencies {
     implementation 'com.sun.mail:jakarta.mail:2.0.1'
     implementation 'com.sun.activation:jakarta.activation:2.0.1'
 
-    implementation 'org.apache.tika:tika-core:1.18'
+    implementation 'org.apache.tika:tika-core:2.9.1'
 
     implementation 'org.reflections:reflections:0.10.2'
 
@@ -128,6 +144,7 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.testcontainers:junit-jupiter:1.19.1'
+    testImplementation 'org.junit-pioneer:junit-pioneer:2.2.0'
 
 implementation 'com.opencsv:opencsv:5.8'
 implementation 'org.springframework.boot:spring-boot-starter-security'
