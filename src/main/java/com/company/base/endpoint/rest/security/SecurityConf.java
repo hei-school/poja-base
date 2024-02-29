@@ -4,10 +4,10 @@ import static com.company.base.endpoint.rest.security.model.Role.WHISTLEBLOWER;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.ForbiddenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,21 +46,23 @@ public class SecurityConf {
     // @formatter:off
     http.exceptionHandling(
             (exceptionHandler) ->
-                exceptionHandler.authenticationEntryPoint(
+                exceptionHandler
+                    .authenticationEntryPoint(
                         // note(spring-exception)
                         // https://stackoverflow.com/questions/59417122/how-to-handle-usernamenotfoundexception-spring-security
                         // issues like when a user tries to access a resource
                         // without appropriate authentication elements
-                    (req, res, e) ->
-                        exceptionResolver.resolveException(
-                            req, res, null, forbiddenWithRemoteInfo(e, req)))
+                        (req, res, e) ->
+                            exceptionResolver.resolveException(
+                                req, res, null, forbiddenWithRemoteInfo(e, req)))
                     .accessDeniedHandler(
                         // note(spring-exception): issues like when a user not having required roles
                         (req, res, e) ->
                             exceptionResolver.resolveException(
                                 req, res, null, forbiddenWithRemoteInfo(e, req))))
         .csrf(AbstractHttpConfigurer::disable)
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .sessionManagement(
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .addFilterBefore(
             bearerFilter(
                 new NegatedRequestMatcher(
@@ -103,6 +105,7 @@ public class SecurityConf {
   public AuthenticationManager authenticationManager() {
     return new ProviderManager(authProvider);
   }
+
   private TokenAuthFilter bearerFilter(RequestMatcher requestMatcher) {
     TokenAuthFilter bearerFilter = new TokenAuthFilter(requestMatcher, AUTHORIZATION_HEADER);
     bearerFilter.setAuthenticationManager(authenticationManager());
