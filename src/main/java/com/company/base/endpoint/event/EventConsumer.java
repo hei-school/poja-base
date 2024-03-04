@@ -17,7 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.DeleteMessageRequest;
@@ -30,17 +29,14 @@ public class EventConsumer implements Consumer<List<EventConsumer.Acknowledgeabl
   private static final String DETAIL_TYPE_PROPERTY = "detail-type";
   private final Workers<Void> workers;
   private final EventServiceInvoker eventServiceInvoker;
-  private final Environment environment;
 
-  public EventConsumer(Workers<Void> workers, EventServiceInvoker eventServiceInvoker, Environment environment) {
+  public EventConsumer(Workers<Void> workers, EventServiceInvoker eventServiceInvoker) {
     this.workers = workers;
     this.eventServiceInvoker = eventServiceInvoker;
-		this.environment = environment;
-	}
+  }
 
   @Override
   public void accept(List<AcknowledgeableTypedEvent> ackEvents) {
-    log.info("WORKER HIKARI PROPERTIES {}", environment.getProperty("spring.datasource.hikari.maximum-pool-size"));
     workers.invokeAll(ackEvents.stream().map(this::toCallable).collect(toList()));
   }
 
