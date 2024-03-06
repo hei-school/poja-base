@@ -33,7 +33,7 @@ jobs:
 
       - uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'corretto'
 
       - uses: hei-school/aws-credentials-setter@v1.0.3
