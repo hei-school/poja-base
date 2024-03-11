@@ -47,6 +47,7 @@ jobs:
         run: |
           ./gradlew sonarqube --info \
             -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.organization=nyh1409 \
             -Dsonar.projectKey=hei.school \
             -Dsonar.projectName=poja \
             -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml \
