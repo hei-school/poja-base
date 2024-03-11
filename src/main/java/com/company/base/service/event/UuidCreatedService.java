@@ -23,7 +23,9 @@ public class UuidCreatedService implements Consumer<UuidCreated> {
 
   @Override
   public void accept(UuidCreated uuidCreated) {
-    log.info("begin processing uuid created with pool-size = {}", environment.getRequiredProperty("spring.datasource.hikari.maximum-pool-size"));
+    log.info(
+        "begin processing uuid created with pool-size = {}",
+        environment.getRequiredProperty("spring.datasource.hikari.maximum-pool-size"));
     var dummyUuid = new DummyUuid();
     dummyUuid.setId(uuidCreated.getUuid());
     dummyUuidRepository.save(dummyUuid);
@@ -31,13 +33,14 @@ public class UuidCreatedService implements Consumer<UuidCreated> {
     log.info("end processing uuid created");
   }
 
-  void createAndFindNDummyUUIDS(int n){
+  void createAndFindNDummyUUIDS(int n) {
     for (int i = 0; i < n; i++) {
       var dummyUuid = new DummyUuid();
       dummyUuid.setId(randomUUID().toString());
       dummyUuidRepository.save(dummyUuid);
-      dummyUuidRepository.findById(dummyUuid.getId())
-        .orElseThrow(() -> new RuntimeException("retrieval failure at UUID nb " + n));
+      dummyUuidRepository
+          .findById(dummyUuid.getId())
+          .orElseThrow(() -> new RuntimeException("retrieval failure at UUID nb " + n));
     }
   }
 }

@@ -9,12 +9,22 @@ plugins {
     id 'org.openapi.generator' version '5.3.0'
 
     id 'jacoco'
+    id 'org.sonarqube' version '3.3'
 }
 
 jacoco {
     toolVersion = "0.8.11"
 }
 
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'https://sonarcloud.io'
+        property 'sonar.projectKey', 'hei.school'
+        property 'sonar.projectName', 'poja-base'
+        property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+        property 'sonar.java.checkstyle.reportPaths', 'build/reports/checkstyle/main.xml,build/reports/checkstyle/test.xml'
+    }
+}
 
 repositories {
 
