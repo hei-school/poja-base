@@ -12,9 +12,7 @@ on:
   workflow_call:
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_SONAR }}  # needed to get PR information, if any
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
 
 jobs:
   test:
@@ -49,7 +47,6 @@ jobs:
         run: |
           ./gradlew sonarqube --info \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} \
             -Dsonar.projectKey=hei.school \
             -Dsonar.projectName=poja \
             -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml \
