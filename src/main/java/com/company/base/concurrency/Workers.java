@@ -25,10 +25,17 @@ public class Workers<T> {
   @SneakyThrows
   public List<Future<T>> invokeAll(List<Callable<T>> callables) {
     var parentThread = currentThread();
-    callables = callables.stream().map(c -> (Callable<T>) () -> {
-      renameThread(currentThread(), getRandomSubThreadNamePrefixFrom(parentThread));
-      return c.call();
-    }).toList();
+    callables =
+        callables.stream()
+            .map(
+                c ->
+                    (Callable<T>)
+                        () -> {
+                          renameThread(
+                              currentThread(), getRandomSubThreadNamePrefixFrom(parentThread));
+                          return c.call();
+                        })
+            .toList();
     return executorService.invokeAll(callables);
   }
 }

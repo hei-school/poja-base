@@ -27,6 +27,7 @@ public class MailboxEventHandler implements RequestHandler<SQSEvent, String> {
     log.info("Received: event={}, awsReqId={}", event, context.getAwsRequestId());
     List<SQSEvent.SQSMessage> messages = event.getRecords();
     log.info("SQS messages: {}", messages);
+
     var applicationContext = applicationContext();
     getRuntime()
         .addShutdownHook(

@@ -29,7 +29,6 @@ public class RequestLoggerConfigurer implements WebMvcConfigurer {
   private static class RequestLogger implements HandlerInterceptor {
 
     private static final String THREAD_OLD_NAME = "threadOldName";
-    // private static final int REQUEST_ID_LENGTH = 8;
     private static final String REQUEST_START_TIME = "startTime";
 
     @Override

@@ -76,6 +76,7 @@ Resources:
           Properties:
             Queue: !Sub '{{resolve:ssm:/poja-base/${Env}/sqs/mailbox-queue-arn}}'
             BatchSize: 5
+      ReservedConcurrentExecutions: 250
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
