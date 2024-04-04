@@ -4,7 +4,10 @@ aurora_max_capacity: null
 aurora_min_capacity: null
 aurora_scale_point: null
 aurora_sleep: 900
-cli_version: 12.6.0
+aws_account_id: ''
+cli_version: 12.7.0
+codeartifact_domain_name: ''
+codeartifact_repository_name: ''
 custom_java_deps: poja-custom-java-deps.txt
 custom_java_env_vars: poja-custom-java-env-vars.txt
 custom_java_repositories: poja-custom-java-repositories.txt
@@ -15,6 +18,10 @@ frontal_reserved_concurrent_executions_nb: 250
 jacoco_min_coverage: '0.5'
 java_facade_it: FacadeIT
 package_full_name: com.company.base
+poja_domain_owner: 088312068315
+poja_python_repository_domain: python-numer-tech
+poja_python_repository_name: numer-python-store
+prod_db_cluster_timeout: '300'
 region: eu-west-3
 ses_source: lou@hei.school
 ssm_sg_id: /poja/sg/id
