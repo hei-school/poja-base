@@ -62,6 +62,7 @@ Resources:
             Method: ANY
             RestApiId:
               Ref: FrontalServerlessRestApi
+      ReservedConcurrentExecutions: 250
 
   WorkerFunction:
     Type: AWS::Serverless::Function
@@ -76,7 +77,7 @@ Resources:
           Properties:
             Queue: !Sub '{{resolve:ssm:/poja-base/${Env}/sqs/mailbox-queue-arn}}'
             BatchSize: 5
-      ReservedConcurrentExecutions: 250
+      ReservedConcurrentExecutions: 50
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group

@@ -30,21 +30,21 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 @EnableWebSecurity
 public class SecurityConf {
 
-	public static final String AUTHORIZATION_HEADER = "Authorization";
-	private final AuthProvider authProvider;
-	private final HandlerExceptionResolver exceptionResolver;
+  public static final String AUTHORIZATION_HEADER = "Authorization";
+  private final AuthProvider authProvider;
+  private final HandlerExceptionResolver exceptionResolver;
 
-	public SecurityConf(
-		AuthProvider authProvider,
-		// InternalToExternalErrorHandler behind
-		@Qualifier("handlerExceptionResolver") HandlerExceptionResolver exceptionResolver) {
-		this.authProvider = authProvider;
-		this.exceptionResolver = exceptionResolver;
-	}
+  public SecurityConf(
+      AuthProvider authProvider,
+      // InternalToExternalErrorHandler behind
+      @Qualifier("handlerExceptionResolver") HandlerExceptionResolver exceptionResolver) {
+    this.authProvider = authProvider;
+    this.exceptionResolver = exceptionResolver;
+  }
 
-	@Bean
-	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-		// @formatter:off
+  @Bean
+  public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    // @formatter:off
     http.exceptionHandling(
             (exceptionHandler) ->
                 exceptionHandler
@@ -70,7 +70,7 @@ public class SecurityConf {
                     new OrRequestMatcher(
                         new AntPathRequestMatcher("/ping", GET.toString()),
                         new AntPathRequestMatcher("/health/**"),
-												new AntPathRequestMatcher("/multipart-upload", PUT.toString())))),
+                        new AntPathRequestMatcher("/multipart-upload", PUT.toString())))),
             AnonymousAuthenticationFilter.class)
         .authorizeHttpRequests(
             (authorize) ->
@@ -79,8 +79,8 @@ public class SecurityConf {
                     .permitAll()
                     .requestMatchers("/health/**")
                     .permitAll()
-                  	.requestMatchers(PUT, "/multipart-upload")
-										.permitAll()
+                    .requestMatchers(PUT, "/multipart-upload")
+                    .permitAll()
                     .requestMatchers(POST, "/secret")
                     .hasRole(WHISTLEBLOWER.getRole())
                     .anyRequest()
