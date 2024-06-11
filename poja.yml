@@ -5,7 +5,7 @@ aurora_min_capacity: null
 aurora_scale_point: null
 aurora_sleep: 900
 aws_account_id: ''
-cli_version: 13.0.1
+cli_version: 13.4.0
 codeartifact_domain_name: ''
 codeartifact_repository_name: ''
 custom_java_deps: poja-custom-java-deps.txt

@@ -69,7 +69,7 @@ Resources:
     Properties:
       Handler: com.company.base.MailboxEventHandler::handleRequest
       MemorySize: 512
-      Timeout: 600 #note(qsq-visibility)
+      Timeout: 600 #note(sqs-visibility)
       Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
       
       Events:
