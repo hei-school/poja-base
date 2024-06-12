@@ -4,6 +4,8 @@ import static java.lang.Math.random;
 
 import com.company.base.PojaGenerated;
 import java.time.Duration;
+
+import com.company.base.endpoint.event.EventBus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +15,6 @@ import lombok.ToString;
 
 @PojaGenerated
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder(toBuilder = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString
@@ -22,6 +22,14 @@ public class DurablyFallibleUuidCreated extends PojaEvent {
   private UuidCreated uuidCreated;
   private int waitDurationBeforeConsumingInSeconds;
   private double failureRate;
+
+  @Builder
+  public DurablyFallibleUuidCreated(EventBus eventBus, UuidCreated uuidCreated, int waitDurationBeforeConsumingInSeconds, double failureRate) {
+    super(eventBus);
+    this.uuidCreated = uuidCreated;
+    this.waitDurationBeforeConsumingInSeconds = waitDurationBeforeConsumingInSeconds;
+    this.failureRate = failureRate;
+  }
 
   public boolean shouldFail() {
     return random() < failureRate;

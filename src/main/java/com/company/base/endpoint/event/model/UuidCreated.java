@@ -1,6 +1,7 @@
 package com.company.base.endpoint.event.model;
 
 import com.company.base.PojaGenerated;
+import com.company.base.endpoint.event.EventBus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Duration;
 import lombok.AllArgsConstructor;
@@ -12,14 +13,17 @@ import lombok.ToString;
 
 @PojaGenerated
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder(toBuilder = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Builder
 @ToString
 public class UuidCreated extends PojaEvent {
   @JsonProperty("uuid")
   private String uuid;
+
+  public UuidCreated(String uuid) {
+    this.uuid = uuid;
+  }
 
   @Override
   public Duration maxConsumerDuration() {
