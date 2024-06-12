@@ -3,10 +3,8 @@ package com.company.base.endpoint.event.model;
 import static java.lang.Math.random;
 
 import com.company.base.PojaGenerated;
-import java.time.Duration;
-
 import com.company.base.endpoint.event.EventBus;
-import lombok.AllArgsConstructor;
+import java.time.Duration;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,7 +22,11 @@ public class DurablyFallibleUuidCreated extends PojaEvent {
   private double failureRate;
 
   @Builder
-  public DurablyFallibleUuidCreated(EventBus eventBus, UuidCreated uuidCreated, int waitDurationBeforeConsumingInSeconds, double failureRate) {
+  public DurablyFallibleUuidCreated(
+      EventBus eventBus,
+      UuidCreated uuidCreated,
+      int waitDurationBeforeConsumingInSeconds,
+      double failureRate) {
     super(eventBus);
     this.uuidCreated = uuidCreated;
     this.waitDurationBeforeConsumingInSeconds = waitDurationBeforeConsumingInSeconds;

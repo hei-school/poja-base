@@ -1,25 +1,24 @@
 package com.company.base.endpoint.event.model;
 
+import static com.company.base.endpoint.event.EventBus.PRIMARY;
+
 import com.company.base.PojaGenerated;
 import com.company.base.endpoint.event.EventBus;
-import lombok.Getter;
-
 import java.io.Serializable;
 import java.time.Duration;
-
-import static com.company.base.endpoint.event.EventBus.PRIMARY;
+import lombok.Getter;
 
 @PojaGenerated
 public abstract class PojaEvent implements Serializable {
-    protected PojaEvent(EventBus eventBus) {
-        this.eventBus = eventBus;
-    }
+  protected PojaEvent(EventBus eventBus) {
+    this.eventBus = eventBus;
+  }
 
-    protected PojaEvent() {
-      this.eventBus = PRIMARY;
-    }
+  protected PojaEvent() {
+    this.eventBus = PRIMARY;
+  }
 
-    public abstract Duration maxConsumerDuration();
+  public abstract Duration maxConsumerDuration();
 
   private Duration randomConsumerBackoffBetweenRetries() {
     return Duration.ofSeconds(maxConsumerBackoffBetweenRetries().toSeconds());
@@ -35,7 +34,5 @@ public abstract class PojaEvent implements Serializable {
             + randomConsumerBackoffBetweenRetries().toSeconds());
   }
 
-  @Getter
-  protected final EventBus eventBus;
-
+  @Getter protected final EventBus eventBus;
 }

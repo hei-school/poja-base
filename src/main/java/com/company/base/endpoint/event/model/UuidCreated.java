@@ -1,10 +1,8 @@
 package com.company.base.endpoint.event.model;
 
 import com.company.base.PojaGenerated;
-import com.company.base.endpoint.event.EventBus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Duration;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
