@@ -4,12 +4,15 @@ Description: poja-base - Event
 Parameters:
   Env:
     Type: String
+  Prefix:
+    Type: String
+    Default: primary
 
 Resources:
   MailboxQueue:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: !Join ['' , [!Ref Env , -poja-base]]
+      QueueName: !Join ['' , [!Ref Env , !Ref Prefix, -poja-base]]
       VisibilityTimeout: 601 #note(sqs-visibility): WorkerFunction.Timeout + 1
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt DeadLetterQueue.Arn
@@ -19,7 +22,7 @@ Resources:
   DeadLetterQueue:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName:  !Join ['' , [!Ref Env , -poja-base-dl]]
+      QueueName:  !Join ['' , [!Ref Env , !Ref Prefix, -poja-base-dl]]
       SqsManagedSseEnabled: false
 
   MailboxQueuePolicy:
@@ -69,65 +72,65 @@ Resources:
   MailboxQueueSSM:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Join ['' , [/poja-base/ , !Ref Env , /sqs/mailbox-queue-url]]
+      Name: !Join ['' , [/poja-base/ , !Ref Env , /, !Ref Prefix, /sqs/mailbox-queue-url]]
       Type: String
       Value: !Ref MailboxQueue
 
   MailboxQueueSSMArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Join ['' , [/poja-base/ , !Ref Env , /sqs/mailbox-queue-arn]]
+      Name: !Join ['' , [/poja-base/ , !Ref Env , /, !Ref Prefix, /sqs/mailbox-queue-arn]]
       Type: String
       Value: !GetAtt MailboxQueue.Arn
 
   DeadLetterQueueSSM:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Join ['' , [/poja-base/ , !Ref Env , /sqs/dead-letter-queue-url]]
+      Name: !Join ['' , [/poja-base/ , !Ref Env , /, !Ref Prefix, /sqs/dead-letter-queue-url]]
       Type: String
       Value: !Ref DeadLetterQueue
 
   DeadLetterQueueArnSSM:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Join [ '' , [ /poja-base/ , !Ref Env , /sqs/dead-letter-queue-arn ] ]
+      Name: !Join [ '' , [ /poja-base/ , !Ref Env , /, !Ref Prefix, /sqs/dead-letter-queue-arn ] ]
       Type: String
       Value: !GetAtt DeadLetterQueue.Arn
 
   EventBridgeBus:
     Type: AWS::Events::EventBus
     Properties:
-      Name: !Join ['', [!Ref Env, -poja-base]]
+      Name: !Join ['', [!Ref Env, !Ref Prefix, -poja-base]]
 
   EventBridgeArchive:
     Type: AWS::Events::Archive
     Properties:
-      ArchiveName: !Join ['', [!Ref Env, -poja-base, -archive]]
+      ArchiveName: !Join ['', [!Ref Env, !Ref Prefix, -poja-base, -archive]]
       SourceArn: !GetAtt EventBridgeBus.Arn
 
   EventBridgeRule:
     Type: AWS::Events::Rule
     Properties:
-      Name: !Join ['', [!Ref Env, -poja-base, -from-api-to-api]]
+      Name: !Join ['', [!Ref Env, !Ref Prefix, -poja-base, -from-api-to-api]]
       EventBusName: !GetAtt EventBridgeBus.Name
       EventPattern:
         source:
           - com.company.base
       Targets:
         - Arn: !GetAtt MailboxQueue.Arn
-          Id: !Join ['', [!Ref Env, -poja-base, -api-mailbox]]
+          Id: !Join ['', [!Ref Env, !Ref Prefix, -poja-base, -api-mailbox]]
 
   EventBridgeBusNameSSM:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Join ['',[/poja-base/ , !Ref Env , /eventbridge/bus-name]]
+      Name: !Join ['',[/poja-base/ , !Ref Env , /, !Ref Prefix, /eventbridge/bus-name]]
       Type: String
       Value: !GetAtt EventBridgeBus.Name
 
   EventBridgeBusArnSSM:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Join [ '',[ /poja-base/ , !Ref Env , /eventbridge/bus-arn ] ]
+      Name: !Join [ '',[ /poja-base/ , !Ref Env , /, !Ref Prefix, /eventbridge/bus-arn ] ]
       Type: String
       Value: !GetAtt EventBridgeBus.Arn
 

@@ -28,13 +28,24 @@ jobs:
           secrets: ${{ toJSON(secrets) }}
           region: ${{ env.AWS_REGION }}
 
-      - name: Deploy event stack
+      - name: Deploy primary event stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: ${{ github.ref_name }}-event-poja-base
+          name: ${{ github.ref_name }}-primary-event-poja-base
           template: cf-stacks/event-stack.yml
           tags: "[ { \"Key\": \"app\", \"Value\": \"poja-base\" }, { \"Key\": \"env\", \"Value\": \"${{ github.ref_name }}\" }, { \"Key\": \"user:poja\", \"Value\": \"poja-base\" } ]"
           capabilities: CAPABILITY_NAMED_IAM
           no-fail-on-empty-changeset: "1"
           parameter-overrides:
-            "Env=${{ github.ref_name }}"
+            "Env=${{ github.ref_name }}, Prefix=primary"
+
+      - name: Deploy secondary event stack
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: ${{ github.ref_name }}-secondary-event-poja-base
+          template: cf-stacks/event-stack.yml
+          tags: "[ { \"Key\": \"app\", \"Value\": \"poja-base\" }, { \"Key\": \"env\", \"Value\": \"${{ github.ref_name }}\" }, { \"Key\": \"user:poja\", \"Value\": \"poja-base\" } ]"
+          capabilities: CAPABILITY_NAMED_IAM
+          no-fail-on-empty-changeset: "1"
+          parameter-overrides:
+            "Env=${{ github.ref_name }}, Prefix=secondary"
