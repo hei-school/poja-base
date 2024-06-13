@@ -3,8 +3,9 @@ package com.company.base.endpoint.event.model;
 import static java.lang.Math.random;
 
 import com.company.base.PojaGenerated;
-import com.company.base.endpoint.event.EventProps;
+import com.company.base.endpoint.event.EventStack;
 import java.time.Duration;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,22 +17,12 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString
+@AllArgsConstructor
+@Builder
 public class DurablyFallibleUuidCreated extends PojaEvent {
   private UuidCreated uuidCreated;
   private int waitDurationBeforeConsumingInSeconds;
   private double failureRate;
-
-  @Builder
-  public DurablyFallibleUuidCreated(
-      EventProps eventProps,
-      UuidCreated uuidCreated,
-      int waitDurationBeforeConsumingInSeconds,
-      double failureRate) {
-    super(eventProps);
-    this.uuidCreated = uuidCreated;
-    this.waitDurationBeforeConsumingInSeconds = waitDurationBeforeConsumingInSeconds;
-    this.failureRate = failureRate;
-  }
 
   public boolean shouldFail() {
     return random() < failureRate;
@@ -46,5 +37,10 @@ public class DurablyFallibleUuidCreated extends PojaEvent {
   @Override
   public Duration maxConsumerBackoffBetweenRetries() {
     return uuidCreated.maxConsumerBackoffBetweenRetries();
+  }
+
+  @Override
+  public EventStack getEventStack() {
+    return EventStack.EVENT_STACK_2;
   }
 }
