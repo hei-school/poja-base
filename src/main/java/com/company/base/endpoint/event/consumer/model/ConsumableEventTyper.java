@@ -42,7 +42,7 @@ public class ConsumableEventTyper implements Function<List<SQSMessage>, List<Con
         log.error("Message could not be unmarshalled, message : {} \n", message);
         continue;
       }
-      String sqsQueueUrl = typedEvent.payload().consumerQueue();
+      String sqsQueueUrl = typedEvent.payload().getEventStack().getSqsQueueUrl();
       ConsumableEvent consumableEvent =
           new ConsumableEvent(
               typedEvent, acknowledger(message, sqsQueueUrl), failer(message, sqsQueueUrl));

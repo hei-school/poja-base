@@ -61,7 +61,7 @@ public class EventProducer<T extends PojaEvent> implements Consumer<Collection<T
           .source(EVENT_SOURCE)
           .detailType(event.getClass().getTypeName())
           .detail(eventAsString)
-          .eventBusName(event.getEventProps().getBusName())
+          .eventBusName(event.getEventStack().getBusName())
           .build();
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
