@@ -1,21 +1,21 @@
 package com.company.base.endpoint.event.model;
 
-import static com.company.base.endpoint.event.EventBus.PRIMARY;
+import static com.company.base.endpoint.event.EventProps.PRIMARY;
 
 import com.company.base.PojaGenerated;
-import com.company.base.endpoint.event.EventBus;
+import com.company.base.endpoint.event.EventProps;
 import java.io.Serializable;
 import java.time.Duration;
 import lombok.Getter;
 
 @PojaGenerated
 public abstract class PojaEvent implements Serializable {
-  protected PojaEvent(EventBus eventBus) {
-    this.eventBus = eventBus;
+  protected PojaEvent(EventProps eventProps) {
+    this.eventProps = eventProps;
   }
 
   protected PojaEvent() {
-    this.eventBus = PRIMARY;
+    this.eventProps = PRIMARY;
   }
 
   public abstract Duration maxConsumerDuration();
@@ -34,5 +34,9 @@ public abstract class PojaEvent implements Serializable {
             + randomConsumerBackoffBetweenRetries().toSeconds());
   }
 
-  @Getter protected final EventBus eventBus;
+  public String consumerQueue() {
+    return this.eventProps.getSqsQueueUrl();
+  }
+
+  @Getter protected final EventProps eventProps;
 }
