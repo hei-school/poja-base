@@ -6,7 +6,6 @@ Parameters:
     Type: String
   Prefix:
     Type: String
-    Default: primary
 
 Resources:
   MailboxQueue:

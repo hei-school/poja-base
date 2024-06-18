@@ -12,11 +12,11 @@ import lombok.ToString;
 
 @PojaGenerated
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Builder
 @ToString
-@AllArgsConstructor
 public class UuidCreated extends PojaEvent {
   @JsonProperty("uuid")
   private String uuid;

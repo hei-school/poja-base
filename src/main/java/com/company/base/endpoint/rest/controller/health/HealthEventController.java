@@ -8,7 +8,6 @@ import static java.util.UUID.randomUUID;
 import com.company.base.PojaGenerated;
 import com.company.base.endpoint.event.EventProducer;
 import com.company.base.endpoint.event.model.DurablyFallibleUuidCreated;
-import com.company.base.endpoint.event.model.PojaEvent;
 import com.company.base.endpoint.event.model.UuidCreated;
 import com.company.base.repository.DummyUuidRepository;
 import com.company.base.repository.model.DummyUuid;
@@ -44,7 +43,7 @@ public class HealthEventController {
         uuids.stream()
             .map(
                 uuid ->
-                    (PojaEvent)
+                    (Object)
                         DurablyFallibleUuidCreated.builder()
                             .uuidCreated(new UuidCreated(uuid))
                             .failureRate(0.1)

@@ -13,11 +13,11 @@ import lombok.ToString;
 
 @PojaGenerated
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString
-@AllArgsConstructor
-@Builder
 public class DurablyFallibleUuidCreated extends PojaEvent {
   private UuidCreated uuidCreated;
   private int waitDurationBeforeConsumingInSeconds;

@@ -89,7 +89,7 @@ Resources:
       MemorySize: 512
       Timeout: 600 #note(sqs-visibility)
       Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
-
+      
       Events:
         AllEvents:
           Type: SQS
