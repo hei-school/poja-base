@@ -31,21 +31,20 @@ public class HealthEventController {
 
   @GetMapping(value = "/health/event1")
   public List<String> handleEvent1(
-          @RequestParam(defaultValue = "1") int nbEvent,
-          @RequestParam(defaultValue = "2") int waitInSeconds) {
+      @RequestParam(defaultValue = "1") int nbEvent,
+      @RequestParam(defaultValue = "2") int waitInSeconds) {
     return handleEvent(nbEvent, waitInSeconds, DurablyFallibleUuidCreated1.class);
   }
 
   @GetMapping(value = "/health/event2")
   public List<String> handleEvent2(
-          @RequestParam(defaultValue = "1") int nbEvent,
-          @RequestParam(defaultValue = "2") int waitInSeconds) {
+      @RequestParam(defaultValue = "1") int nbEvent,
+      @RequestParam(defaultValue = "2") int waitInSeconds) {
     return handleEvent(nbEvent, waitInSeconds, DurablyFallibleUuidCreated2.class);
   }
 
   @PostMapping(value = "/health/event/uuids")
-  public ResponseEntity<String> checkUuids(
-          @RequestBody List<String> uuids) {
+  public ResponseEntity<String> checkUuids(@RequestBody List<String> uuids) {
     return checkUuidsSaved(uuids) ? OK : KO;
   }
 
@@ -74,9 +73,7 @@ public class HealthEventController {
 
   private <T> void fireEvents(List<String> uuids, int waitInSeconds, Class<T> eventType) {
     eventProducer.accept(
-            uuids.stream()
-                    .map(uuid -> createEvent(uuid, waitInSeconds, eventType))
-                    .toList());
+        uuids.stream().map(uuid -> createEvent(uuid, waitInSeconds, eventType)).toList());
   }
 
   private <T> T createEvent(String uuid, int waitInSeconds, Class<T> eventType) {
@@ -84,13 +81,15 @@ public class HealthEventController {
     double failureRate = 0.1;
 
     if (eventType.equals(DurablyFallibleUuidCreated1.class)) {
-      return eventType.cast(DurablyFallibleUuidCreated1.builder()
+      return eventType.cast(
+          DurablyFallibleUuidCreated1.builder()
               .uuidCreated(uuidCreated)
               .failureRate(failureRate)
               .waitDurationBeforeConsumingInSeconds(waitInSeconds)
               .build());
     } else if (eventType.equals(DurablyFallibleUuidCreated2.class)) {
-      return eventType.cast(DurablyFallibleUuidCreated2.builder()
+      return eventType.cast(
+          DurablyFallibleUuidCreated2.builder()
               .uuidCreated(uuidCreated)
               .failureRate(failureRate)
               .waitDurationBeforeConsumingInSeconds(waitInSeconds)
@@ -101,9 +100,8 @@ public class HealthEventController {
   }
 
   private boolean checkUuidsSaved(List<String> uuids) {
-    List<String> savedUuids = dummyUuidRepository.findAllById(uuids).stream()
-            .map(DummyUuid::getId)
-            .toList();
+    List<String> savedUuids =
+        dummyUuidRepository.findAllById(uuids).stream().map(DummyUuid::getId).toList();
     return savedUuids.containsAll(uuids);
   }
 }
