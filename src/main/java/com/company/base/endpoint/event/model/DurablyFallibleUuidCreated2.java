@@ -4,9 +4,8 @@ import static com.company.base.endpoint.event.EventStack.EVENT_STACK_2;
 import static java.lang.Math.random;
 
 import com.company.base.PojaGenerated;
-import java.time.Duration;
-
 import com.company.base.endpoint.event.EventStack;
+import java.time.Duration;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

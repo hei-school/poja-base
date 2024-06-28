@@ -3,7 +3,6 @@ package com.company.base.endpoint.event.model;
 import static java.lang.Math.random;
 
 import com.company.base.PojaGenerated;
-import com.company.base.endpoint.event.EventStack;
 import java.time.Duration;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
