@@ -25,7 +25,6 @@ import software.amazon.awssdk.services.eventbridge.model.PutEventsResultEntry;
 @Component
 @Slf4j
 public class EventProducer<T extends PojaEvent> implements Consumer<Collection<T>> {
-  private static final String EVENT_SOURCE = "com.company.base";
   private final ObjectMapper om;
   private final EventBridgeClient eventBridgeClient;
 
@@ -58,7 +57,7 @@ public class EventProducer<T extends PojaEvent> implements Consumer<Collection<T
     try {
       String eventAsString = om.writeValueAsString(event);
       return PutEventsRequestEntry.builder()
-          .source(EVENT_SOURCE)
+          .source(event.getEventSource())
           .detailType(event.getClass().getTypeName())
           .detail(eventAsString)
           .eventBusName(event.getEventStack().getBusName())
