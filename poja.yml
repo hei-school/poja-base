@@ -5,7 +5,7 @@ aurora_min_capacity: null
 aurora_scale_point: null
 aurora_sleep: 900
 aws_account_id: ''
-cli_version: 15.1.1
+cli_version: 15.2.2
 codeartifact_domain_name: ''
 codeartifact_repository_name: ''
 custom_java_deps: poja-custom-java-deps.txt
@@ -32,6 +32,7 @@ ts_client_api_url_env_var_name: ''
 ts_client_default_openapi_server_url: ''
 with_codeql: 'true'
 with_database: aurora-postgres
+with_file_storage: 'true'
 with_gen_clients: 'false'
 with_own_vpc: 'true'
 with_publish_to_npm_registry: 'false'
