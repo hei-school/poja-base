@@ -88,11 +88,19 @@ jacocoTestReport {
 
             def xml = xmlParser.parse(coverageReportFile)
 
-            def totalLines = xml.'counter'.find { it.@type == 'LINE' }.@missed.toInteger() + xml.'counter'.find { it.@type == 'LINE' }.@covered.toInteger()
-            def coveredLines = xml.'counter'.find { it.@type == 'LINE' }.@covered.toInteger()
-            def coverageRate = coveredLines / totalLines.toDouble() * 100
-
-            println "Total Line Coverage Rate: ${coverageRate.round(2)}%"
+            def lineCounter = xml.'counter'.find { it.@type == 'LINE' }
+            if (lineCounter != null) {
+                def totalLines = lineCounter.@missed?.toInteger() + lineCounter.@covered?.toInteger() ?: 0
+                def coveredLines = lineCounter.@covered?.toInteger() ?: 0
+                if (totalLines > 0) {
+                    def coverageRate = coveredLines / totalLines.toDouble() * 100
+                    println "Total Line Coverage Rate: ${coverageRate.round(2)}%"
+                } else {
+                    println "No lines were covered or missed in the report."
+                }
+            } else {
+                println "No LINE coverage counter found in the JaCoCo report."
+            }
         } else {
             println "No JaCoCo coverage report found. Make sure you run 'gradle test jacocoTestReport' first."
         }
