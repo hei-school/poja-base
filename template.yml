@@ -8,7 +8,7 @@ Globals:
     Runtime: java21
     Tracing: Active
     Architectures:
-      - x86_64
+      - arm64
     EventInvokeConfig:
       MaximumRetryAttempts: 0
     AutoPublishAlias: live
@@ -25,6 +25,7 @@ Globals:
         ENV: !Ref Env
         AWS_S3_BUCKET: !Sub '{{resolve:ssm:/poja-base/${Env}/s3/bucket-name}}'
         AWS_SES_SOURCE: lou@hei.school
+        
         
         SPRING_DATASOURCE_URL: !Sub '{{resolve:ssm:/poja-base/${Env}/db/url}}'
         SPRING_DATASOURCE_USERNAME: !Sub '{{resolve:ssm:/poja-base/${Env}/db/username}}'
@@ -60,39 +61,6 @@ Resources:
             Method: ANY
             RestApiId:
               Ref: FrontalServerlessRestApi
-      ReservedConcurrentExecutions: 50
-
-  WorkerFunction1:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: com.company.base.MailboxEventHandler::handleRequest
-      MemorySize: 512
-      Timeout: 300 #note(sqs-visibility)
-      Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
-      
-      Events:
-        AllEvents:
-          Type: SQS
-          Properties:
-            Queue: !Sub '{{resolve:ssm:/poja-base/${Env}/1/sqs/mailbox-queue-arn}}'
-            BatchSize: 1
-      ReservedConcurrentExecutions: 50
-
-  WorkerFunction2:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: com.company.base.MailboxEventHandler::handleRequest
-      MemorySize: 512
-      Timeout: 300 #note(sqs-visibility)
-      Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
-      
-      Events:
-        AllEvents:
-          Type: SQS
-          Properties:
-            Queue: !Sub '{{resolve:ssm:/poja-base/${Env}/2/sqs/mailbox-queue-arn}}'
-            BatchSize: 1
-      ReservedConcurrentExecutions: 50
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
