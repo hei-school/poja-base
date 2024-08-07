@@ -40,7 +40,7 @@ Resources:
       VpcSecurityGroupIds:
         - !Sub '{{resolve:ssm:/poja/sg/id}}'
       ScalingConfiguration:
-        SecondsUntilAutoPause: !If [ IsProdEnv, 900, !Ref ProdDbClusterTimeout]
+        SecondsUntilAutoPause: !If [ IsProdEnv, None, !Ref ProdDbClusterTimeout]
 
 
   DatabaseClusterSSM:
