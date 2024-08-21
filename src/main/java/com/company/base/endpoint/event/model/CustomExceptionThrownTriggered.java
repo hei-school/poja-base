@@ -13,6 +13,8 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 public class CustomExceptionThrownTriggered extends PojaEvent {
+  private int number;
+
   @Override
   public Duration maxConsumerDuration() {
     return Duration.ofSeconds(60);
