@@ -70,6 +70,7 @@ public class SecurityConf {
                     new OrRequestMatcher(
                         new AntPathRequestMatcher("/ping", GET.toString()),
                         new AntPathRequestMatcher("/health/**"),
+                        new AntPathRequestMatcher("/exception", GET.name()),
                         new AntPathRequestMatcher("/multipart-upload", PUT.toString())))),
             AnonymousAuthenticationFilter.class)
         .authorizeHttpRequests(
@@ -80,6 +81,8 @@ public class SecurityConf {
                     .requestMatchers("/health/**")
                     .permitAll()
                     .requestMatchers(PUT, "/multipart-upload")
+                    .permitAll()
+                    .requestMatchers(GET, "/exception")
                     .permitAll()
                     .requestMatchers(POST, "/secret")
                     .hasRole(WHISTLEBLOWER.getRole())
