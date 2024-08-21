@@ -38,7 +38,7 @@ general:
   poja_domain_owner: 088312068315
   poja_python_repository_domain: python-numer-tech
   poja_python_repository_name: numer-python-store
-  with_queues_nb: 0
+  with_queues_nb: 2
   with_snapstart: 'true'
 integration:
   with_codeql: 'false'
