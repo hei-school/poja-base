@@ -57,11 +57,13 @@ public class Workers<T> {
     List<Throwable> exceptions = new ArrayList<>();
     futures.forEach(
         future -> {
-          try {
-            future.get();
-          } catch (ExecutionException | InterruptedException e) {
-            exceptions.add(e);
-            log.error("Error occurred: {}", e.getMessage());
+          if (future.isDone()) {
+            try {
+              future.get();
+            } catch (ExecutionException | InterruptedException e) {
+              exceptions.add(e);
+              log.error("Error occurred: {}", e.getMessage());
+            }
           }
         });
     return exceptions;
