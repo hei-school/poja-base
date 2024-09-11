@@ -1,13 +1,13 @@
 package com.company.base.endpoint.rest.controller.health;
 
-import static com.company.base.file.FileHashAlgorithm.NONE;
+import static com.company.base.file.hash.FileHashAlgorithm.NONE;
 import static java.io.File.createTempFile;
 import static java.nio.file.Files.createTempDirectory;
 import static java.util.UUID.randomUUID;
 
 import com.company.base.PojaGenerated;
-import com.company.base.file.BucketComponent;
-import com.company.base.file.FileHash;
+import com.company.base.file.bucket.BucketComponent;
+import com.company.base.file.hash.FileHash;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

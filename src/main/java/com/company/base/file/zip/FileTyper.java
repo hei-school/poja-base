@@ -1,4 +1,4 @@
-package com.company.base.file;
+package com.company.base.file.zip;
 
 import static org.springframework.http.MediaType.parseMediaType;
 

@@ -33,19 +33,15 @@ Resources:
       DBSubnetGroupName: !Ref DBSubnetGroup
       DeletionProtection: true
       Engine: aurora-postgresql
-      EngineMode: serverless
-      EngineVersion: 13.9 #Only postgresql version 13.9 and 11.9 supports Aurora serverless v1
+      EngineMode: provisioned
+      EngineVersion: 16.1
       MasterUsername: !Sub '{{resolve:ssm:/poja-base/${Env}/db/username}}'
       MasterUserPassword: !Sub '{{resolve:ssm:/poja-base/${Env}/db/password}}'
       VpcSecurityGroupIds:
         - !Sub '{{resolve:ssm:/poja/sg/id}}'
-      ScalingConfiguration:
+      ServerlessV2ScalingConfiguration:
         MaxCapacity: 8
         MinCapacity: 2
-        SecondsBeforeTimeout: 60
-        AutoPause: false
-        SecondsUntilAutoPause: !If [ IsProdEnv, 900, !Ref ProdDbClusterTimeout]
-            
 
 
   DatabaseClusterSSM:

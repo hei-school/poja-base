@@ -17,6 +17,7 @@ import com.company.base.endpoint.event.model.UuidCreated;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -38,6 +39,7 @@ public class ConsumableEventTyperTest extends FacadeIT {
             + "\", \"detail\":"
             + om.writeValueAsString(typedEvent.payload())
             + "}");
+    message.setAttributes(Map.of("ApproximateReceiveCount", "1"));
     return message;
   }
 

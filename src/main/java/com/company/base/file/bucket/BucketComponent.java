@@ -1,8 +1,10 @@
-package com.company.base.file;
+package com.company.base.file.bucket;
 
 import static java.io.File.createTempFile;
 
 import com.company.base.PojaGenerated;
+import com.company.base.file.hash.FileHash;
+import com.company.base.file.hash.FileHashAlgorithm;
 import java.io.File;
 import java.net.URL;
 import java.time.Duration;

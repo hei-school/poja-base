@@ -1,4 +1,4 @@
-package com.company.base.file;
+package com.company.base.file.bucket;
 
 import com.company.base.PojaGenerated;
 import lombok.Getter;

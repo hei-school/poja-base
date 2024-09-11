@@ -1,4 +1,4 @@
-package com.company.base.file;
+package com.company.base.file.hash;
 
 import com.company.base.PojaGenerated;
 

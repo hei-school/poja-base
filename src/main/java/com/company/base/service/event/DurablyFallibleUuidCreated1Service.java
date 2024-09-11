@@ -1,5 +1,7 @@
 package com.company.base.service.event;
 
+import static java.lang.Thread.sleep;
+
 import com.company.base.PojaGenerated;
 import com.company.base.endpoint.event.model.DurablyFallibleUuidCreated1;
 import java.util.function.Consumer;
@@ -7,8 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import static java.lang.Thread.sleep;
 
 @PojaGenerated
 @Service
@@ -20,7 +20,7 @@ public class DurablyFallibleUuidCreated1Service implements Consumer<DurablyFalli
   @SneakyThrows
   @Override
   public void accept(DurablyFallibleUuidCreated1 durablyFallibleUuidCreated1) {
-        sleep(durablyFallibleUuidCreated1.getWaitDurationBeforeConsumingInSeconds() * 1_000L);
+    sleep(durablyFallibleUuidCreated1.getWaitDurationBeforeConsumingInSeconds() * 1_000L);
     if (durablyFallibleUuidCreated1.shouldFail()) {
       throw new RuntimeException("Oops, random fail!");
     }
