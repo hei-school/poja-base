@@ -31,7 +31,7 @@ Resources:
       BackupRetentionPeriod: 35
       DatabaseName: !Join [ '', !Split [ '-', !Ref DBName ] ]
       DBSubnetGroupName: !Ref DBSubnetGroup
-      DeletionProtection: true
+      DeletionProtection: false
       Engine: aurora-postgresql
       EngineMode: provisioned
       EngineVersion: 16.1
@@ -43,6 +43,15 @@ Resources:
         MaxCapacity: 8
         MinCapacity: 2
 
+  DatabaseInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBClusterIdentifier: !Ref DatabaseCluster
+      DBInstanceClass: db.serverless
+      Engine: aurora-postgresql
+      PubliclyAccessible: false
+      DBSubnetGroupName: !Ref DBSubnetGroup
+    DependsOn: DatabaseCluster
 
   DatabaseClusterSSM:
     Type: AWS::SSM::Parameter
