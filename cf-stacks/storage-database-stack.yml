@@ -31,7 +31,7 @@ Resources:
       BackupRetentionPeriod: 35
       DatabaseName: !Join [ '', !Split [ '-', !Ref DBName ] ]
       DBSubnetGroupName: !Ref DBSubnetGroup
-      DeletionProtection: false
+      DeletionProtection: true
       Engine: aurora-postgresql
       EngineMode: provisioned
       EngineVersion: 16.1

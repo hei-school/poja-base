@@ -13,4 +13,3 @@ import lombok.Setter;
 public class Dummy {
   @Id private String id;
 }
-
