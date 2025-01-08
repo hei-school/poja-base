@@ -40,10 +40,21 @@ Parameters:
     Type: String
 
 Resources:
-  FrontalServerlessRestApi:
-    Type: AWS::Serverless::Api
+  FrontalServerlessHttpApi:
+    Type: AWS::Serverless::HttpApi
     Properties:
       StageName: Prod
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+        AllowHeaders:
+          - "*"
+        AllowOrigins:
+          - "*"
       BinaryMediaTypes:
         - "*~1*"
 
@@ -54,15 +65,14 @@ Resources:
       MemorySize: 256
       Timeout: 30
       Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
-      
       Events:
         ApiCall:
-          Type: Api
+          Type: HttpApi
           Properties:
             Path: /{proxy+}
             Method: ANY
-            RestApiId:
-              Ref: FrontalServerlessRestApi
+            ApiId:
+              Ref: FrontalServerlessHttpApi
 
   WorkerFunction1:
     Type: AWS::Serverless::Function
