@@ -17,7 +17,7 @@ database:
   database_non_root_password: null
   database_non_root_username: null
   prod_db_cluster_timeout: '300'
-  with_database: aurora-postgres
+  with_database: None
 emailing:
   ses_source: lou@hei.school
 gen_api_client:
@@ -38,7 +38,7 @@ general:
   poja_domain_owner: 088312068315
   poja_python_repository_domain: python-numer-tech
   poja_python_repository_name: numer-python-store
-  with_queues_nb: 2
+  with_queues_nb: 0
   with_snapstart: 'true'
 integration:
   with_codeql: 'false'
@@ -48,10 +48,10 @@ integration:
   with_swagger_ui: 'false'
 networking:
   region: eu-west-3
-  ssm_sg_id: /poja/sg/id
-  ssm_subnet1_id: /poja/subnet/private1/id
-  ssm_subnet2_id: /poja/subnet/private2/id
-  with_own_vpc: 'true'
+  ssm_sg_id: 'null'
+  ssm_subnet1_id: 'null'
+  ssm_subnet2_id: 'null'
+  with_own_vpc: 'false'
 testing:
   jacoco_min_coverage: '0.4'
   java_facade_it: FacadeIT

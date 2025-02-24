@@ -14,24 +14,15 @@ Globals:
     AutoPublishAlias: live
     SnapStart:
       ApplyOn: PublishedVersions
-    VpcConfig:
-      SecurityGroupIds:
-        - !Sub '{{resolve:ssm:/poja/sg/id}}'
-      SubnetIds:
-        - !Sub '{{resolve:ssm:/poja/subnet/private1/id}}'
-        - !Sub '{{resolve:ssm:/poja/subnet/private2/id}}'
+    
     Environment:
       Variables:
         ENV: !Ref Env
         AWS_S3_BUCKET: !Sub '{{resolve:ssm:/poja-base/${Env}/s3/bucket-name}}'
         AWS_SES_SOURCE: lou@hei.school
-        AWS_EVENTBRIDGE_BUS: !Sub '{{resolve:ssm:/poja-base/${Env}/eventbridge/bus-name}}'
-        AWS_EVENT_STACK_1_SQS_QUEUE_URL: !Sub '{{resolve:ssm:/poja-base/${Env}/1/sqs/mailbox-queue-url}}'
-        AWS_EVENT_STACK_2_SQS_QUEUE_URL: !Sub '{{resolve:ssm:/poja-base/${Env}/2/sqs/mailbox-queue-url}}'
         
-        SPRING_DATASOURCE_URL: !Sub '{{resolve:ssm:/poja-base/${Env}/db/url}}'
-        SPRING_DATASOURCE_USERNAME: !Sub '{{resolve:ssm:/poja-base/${Env}/db/username}}'
-        SPRING_DATASOURCE_PASSWORD: !Sub '{{resolve:ssm:/poja-base/${Env}/db/password}}'
+        
+        
         
         
 
@@ -40,21 +31,12 @@ Parameters:
     Type: String
 
 Resources:
-  FrontalServerlessHttpApi:
-    Type: AWS::Serverless::HttpApi
+  FrontalServerlessRestApi:
+    Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
-      CorsConfiguration:
-        AllowMethods:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-          - OPTIONS
-        AllowHeaders:
-          - "*"
-        AllowOrigins:
-          - "*"
+      BinaryMediaTypes:
+        - "*~1*"
 
   FrontalFunction:
     Type: AWS::Serverless::Function
@@ -63,44 +45,15 @@ Resources:
       MemorySize: 256
       Timeout: 30
       Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
+      
       Events:
         ApiCall:
-          Type: HttpApi
+          Type: Api
           Properties:
             Path: /{proxy+}
             Method: ANY
-            ApiId:
-              Ref: FrontalServerlessHttpApi
-
-  WorkerFunction1:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: com.company.base.MailboxEventHandler::handleRequest
-      MemorySize: 512
-      Timeout: 300 #note(sqs-visibility)
-      Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
-      
-      Events:
-        AllEvents:
-          Type: SQS
-          Properties:
-            Queue: !Sub '{{resolve:ssm:/poja-base/${Env}/1/sqs/mailbox-queue-arn}}'
-            BatchSize: 1
-
-  WorkerFunction2:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: com.company.base.MailboxEventHandler::handleRequest
-      MemorySize: 512
-      Timeout: 300 #note(sqs-visibility)
-      Role: !Sub '{{resolve:ssm:/poja-base/${Env}/execution/role-arn}}'
-      
-      Events:
-        AllEvents:
-          Type: SQS
-          Properties:
-            Queue: !Sub '{{resolve:ssm:/poja-base/${Env}/2/sqs/mailbox-queue-arn}}'
-            BatchSize: 1
+            RestApiId:
+              Ref: FrontalServerlessRestApi
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
@@ -120,7 +73,7 @@ Resources:
     Properties:
       Name: !Join [ '', [ /poja-base/, !Ref Env, /api/url ] ]
       Type: String
-      Value: !Sub "https://${FrontalServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+      Value: !Sub "https://${FrontalServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
 
 Outputs:
   ApiUrl:
