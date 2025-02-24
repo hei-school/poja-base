@@ -31,12 +31,38 @@ Parameters:
     Type: String
 
 Resources:
-  FrontalServerlessRestApi:
-    Type: AWS::Serverless::Api
+  FrontalServerlessHttpApi:
+    StageName: $default
+    Type: AWS::Serverless::HttpApi
     Properties:
-      StageName: Prod
-      BinaryMediaTypes:
-        - "*~1*"
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+        AllowHeaders:
+          - "*"
+        AllowOrigins:
+          - "*"
+
+  HttpApiIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref FrontalServerlessHttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub "${FrontalFunction.Arn}:live"
+      PayloadFormatVersion: "1.0"
+      IntegrationMethod: ANY
+      TimeoutInMillis: 20000
+
+  DefaultRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref FrontalServerlessHttpApi
+      RouteKey: $default
+      Target: !Sub "integrations/${HttpApiIntegration}"
 
   FrontalFunction:
     Type: AWS::Serverless::Function
@@ -48,32 +74,19 @@ Resources:
       
       Events:
         ApiCall:
-          Type: Api
+          Type: HttpApi
           Properties:
             Path: /{proxy+}
             Method: ANY
-            RestApiId:
-              Ref: FrontalServerlessRestApi
-
-  ApplicationResourceGroup:
-    Type: AWS::ResourceGroups::Group
-    Properties:
-      Name:
-        Fn::Sub: ApplicationInsights-SAM-${AWS::StackName}
-      ResourceQuery:
-        Type: CLOUDFORMATION_STACK_1_0
-  ApplicationInsightsMonitoring:
-    Type: AWS::ApplicationInsights::Application
-    Properties:
-      ResourceGroupName: !Ref ApplicationResourceGroup
-      AutoConfigurationEnabled: 'true'
+            ApiId:
+              Ref: FrontalServerlessHttpApi
 
   ApiUrlSSM:
     Type: AWS::SSM::Parameter
     Properties:
       Name: !Join [ '', [ /poja-base/, !Ref Env, /api/url ] ]
       Type: String
-      Value: !Sub "https://${FrontalServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+      Value: !GetAtt FrontalServerlessHttpApi.ApiEndpoint
 
 Outputs:
   ApiUrl:

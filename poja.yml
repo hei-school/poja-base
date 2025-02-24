@@ -1,4 +1,5 @@
 compute:
+  api_gateway_timeout: 20000
   frontal_function_timeout: 30
   frontal_memory: 256
   worker_batch: 1
@@ -10,14 +11,14 @@ concurrency:
   worker_reserved_concurrent_executions_nb: null
 database:
   aurora_auto_pause: 'false'
-  aurora_max_capacity: 8
-  aurora_min_capacity: 2
-  aurora_scale_point: 60
-  aurora_sleep: 900
+  aurora_max_capacity: null
+  aurora_min_capacity: null
+  aurora_scale_point: null
+  aurora_sleep: null
   database_non_root_password: null
   database_non_root_username: null
   prod_db_cluster_timeout: '300'
-  with_database: None
+  with_database: none
 emailing:
   ses_source: lou@hei.school
 gen_api_client:
@@ -30,7 +31,7 @@ gen_api_client:
   with_publish_to_npm_registry: 'false'
 general:
   app_name: poja-base
-  cli_version: 18.1.1
+  cli_version: 18.4.5
   custom_java_deps: poja-custom-java-deps.txt
   custom_java_env_vars: poja-custom-java-env-vars.txt
   custom_java_repositories: poja-custom-java-repositories.txt
