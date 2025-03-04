@@ -31,7 +31,7 @@ gen_api_client:
   with_publish_to_npm_registry: 'false'
 general:
   app_name: poja-base
-  cli_version: 18.4.5
+  cli_version: 18.4.6
   custom_java_deps: poja-custom-java-deps.txt
   custom_java_env_vars: poja-custom-java-env-vars.txt
   custom_java_repositories: poja-custom-java-repositories.txt
