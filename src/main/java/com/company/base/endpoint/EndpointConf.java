@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @PojaGenerated
+@SuppressWarnings("all")
 @Configuration
 public class EndpointConf {
   @Bean

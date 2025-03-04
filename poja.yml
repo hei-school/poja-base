@@ -45,7 +45,7 @@ integration:
   with_codeql: 'false'
   with_file_storage: 'true'
   with_sentry: 'false'
-  with_sonar: 'false'
+  with_sonar: 'true'
   with_swagger_ui: 'false'
 networking:
   region: eu-west-3
